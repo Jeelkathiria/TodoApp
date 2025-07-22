@@ -22,7 +22,7 @@ function AddTodo({ onNewItem }) {
     <div className="container text-center">
       <div className="row kg-row">
         <div className="col-6">
-          <input
+          <input 
             type="text"
             placeholder="Enter Todo Here"
             value={todoName}

@@ -5,7 +5,7 @@ const path = require("path");
 const express = require("express");
 const { default: moongose } = require("mongoose");
 const DB_Path = "mongodb+srv://root:root@jeel.fgkvcqt.mongodb.net/todo?retryWrites=true&w=majority&appName=Jeel";;
-
+const cors = require("cors");
 
 //Local Modules
 const todoItemsRouter = require("./routes/todoItemsRouter");
@@ -15,6 +15,9 @@ const errorController = require("./controllers/error");
 const app = express();
 
 app.use(express.urlencoded());
+app.use(express.json());
+app.use(cors())
+
 app.use('/api/todo', todoItemsRouter);
 app.use(errorController.get404);
 

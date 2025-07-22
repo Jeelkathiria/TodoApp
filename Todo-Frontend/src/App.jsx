@@ -2,23 +2,29 @@ import AppName from "./components/AppName";
 import AddTodo from "./components/AddTodo";
 import TodoItems from "./components/TodoItems";
 import WelcomeMessage from "./components/WelcomeMessage";
+import "./index.css";
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { addItemToServer , getItemsFromServer , deleteItemFromServer } from "./services/itemsService";
 
 function App() {
   const [todoItems, setTodoItems] = useState([]);
 
-  const handleNewItem = (itemName, itemDueDate) => {
-    console.log(`New Item Added: ${itemName} Date:${itemDueDate}`);
-    const newTodoItems = [
-      ...todoItems,
-      { name: itemName, dueDate: itemDueDate },
-    ];
+  useEffect(() =>{
+    getItemsFromServer().then((initialItems) =>{
+      setTodoItems(initialItems);
+    })
+  } , [])
+
+  const handleNewItem = async (task, date) => {
+    const item = await addItemToServer(task, date);
+    const newTodoItems = [...todoItems, item];
     setTodoItems(newTodoItems);
   };
 
-  const handleDeleteItem = (todoItemName) => {
-    const newTodoItems = todoItems.filter((item) => item.name !== todoItemName);
+  const handleDeleteItem = async (id) => {
+    const deleteById = await deleteItemFromServer(id);
+    const newTodoItems = todoItems.filter((item) => item.id !== deleteById);
     setTodoItems(newTodoItems);
   };
 
