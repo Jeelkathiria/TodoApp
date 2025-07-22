@@ -4,7 +4,9 @@ const path = require("path");
 //External Modules
 const express = require("express");
 const { default: moongose } = require("mongoose");
-const DB_Path = "mongodb+srv://root:root@jeel.fgkvcqt.mongodb.net/todo?retryWrites=true&w=majority&appName=Jeel";;
+require('dotenv').config();
+const DB_Path = process.env.DB_URI;
+
 const cors = require("cors");
 
 //Local Modules
